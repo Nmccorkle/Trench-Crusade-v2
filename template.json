@@ -1,0 +1,167 @@
+{
+  "Actor": {
+    "types": ["crusader", "npc"],
+    "templates": {
+      "base": {
+        "wounds": {
+          "value": 10,
+          "min": 0,
+          "max": 10
+        },
+        "power": {
+          "value": 5,
+          "min": 0,
+          "max": 5
+        },
+        "biography": ""
+      }
+    },
+    "crusader": {
+      "templates": ["base"],
+      "attributes": {
+        "tier": {
+          "value": 1,
+          "min": 1,
+          "max": 3
+        }
+      },
+      "abilities": {
+        "str": {
+          "value": 35,
+          "min": 0
+        },
+        "agi": {
+          "value": 30
+        },
+        "end": {
+          "value": 30,
+          "min": 0
+        },
+        "wil": {
+          "value": 30,
+          "min": 0
+        },
+        "int": {
+          "value": 30
+        },
+        "dev": {
+          "value": 25
+        },
+        "cor": {
+          "value": 0
+        },
+        "bs": {
+          "value": 25
+        },
+        "ws": {
+          "value": 25
+        }
+      },
+      "skills" : {
+        "alchemy": {
+          "value": 0
+        },
+        "athletics": {
+          "value": 0
+        },
+        "awareness": {
+          "value": 0
+        },
+        "brawling": {
+          "value": 0
+        },
+        "command": {
+          "value": 0
+        },
+        "discipline": {
+          "value": 0
+        },
+        "drive": {
+          "value": 0
+        },
+        "esoterica": {
+          "value": 0
+        },
+        "faith": {
+          "value": 0
+        },
+        "forgecraft": {
+          "value": 0
+        },
+        "gambling": {
+          "value": 0
+        },
+        "heresy": {
+          "value": 0
+        },
+        "intimidation": {
+          "value": 0
+        },
+        "investigation": {
+          "value": 0
+        },
+        "lore": {
+          "value": 0
+        },
+        "medicine": {
+          "value": 0
+        },
+        "navigation": {
+          "value": 0
+        },
+        "riding": {
+          "value": 0
+        },
+        "sabotage": {
+          "value": 0
+        },
+        "stealth": {
+          "value": 0
+        },
+        "subterfuge": {
+          "value": 0
+        },
+        "survival": {
+          "value": 0
+        },
+        "tactics": {
+          "value": 0
+        },
+        "torture": {
+          "value": 0
+        },
+        "tradecraft": {
+          "value": 0
+        },
+        "zealotry": {
+          "value": 0
+        }
+      }
+    },
+    "npc": {
+      "templates": ["base"],
+      "cr": 0
+    }
+  },
+  "Item": {
+    "types": ["item", "feature", "spell"],
+    "templates": {
+      "base": {
+        "description": ""
+      }
+    },
+    "item": {
+      "templates": ["base"],
+      "quantity": 1,
+      "weight": 0,
+      "formula": "d20 + @str.mod + ceil(@lvl / 2)"
+    },
+    "feature": {
+      "templates": ["base"]
+    },
+    "spell": {
+      "templates": ["base"],
+      "spellLevel": 1
+    }
+  }
+}
