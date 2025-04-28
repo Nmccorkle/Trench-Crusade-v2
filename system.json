@@ -26,7 +26,7 @@
   ],
   "version": "2.0.0",
   "compatibility": {
-    "minimum": 11,
+    "minimum": "12.331",
     "verified": "11.315"
   },
   "esmodules": ["module/trench-crusade.mjs"],
