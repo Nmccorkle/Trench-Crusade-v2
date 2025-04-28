@@ -1,8 +1,8 @@
 // Import document classes.
-import { TrenchCrusadeCrusader } from './documents/crusader.mjs';
+import { TrenchCrusadeCrusader } from './documents/actor.mjs';
 import { TrenchCrusadeItem } from './documents/item.mjs';
 // Import sheet classes.
-import { TrenchCrusadeCrusaderSheet } from './sheets/crusader-sheet.mjs';
+import { TrenchCrusadeCrusaderSheet } from './sheets/actor-sheet.mjs';
 import { TrenchCrusadeItemSheet } from './sheets/item-sheet.mjs';
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
@@ -36,12 +36,12 @@ Hooks.once('init', function () {
   };
 
   // Define custom Document and DataModel classes
-  CONFIG.crusader.documentClass = TrenchCrusadeCrusader;
+  CONFIG.actor.documentClass = TrenchCrusadeCrusader;
 
   // Note that you don't need to declare a DataModel
-  // for the base crusader/item classes - they are included
+  // for the base actor/item classes - they are included
   // with the Character/NPC as part of super.defineSchema()
-  CONFIG.crusader.dataModels = {
+  CONFIG.actor.dataModels = {
     character: models.TrenchCrusadeCharacter,
     npc: models.TrenchCrusadeNPC
   }
@@ -52,16 +52,16 @@ Hooks.once('init', function () {
     spell: models.TrenchCrusadeSpell
   }
 
-  // Active Effects are never copied to the crusader,
-  // but will still apply to the crusader from within the Item
+  // Active Effects are never copied to the actor,
+  // but will still apply to the actor from within the Item
   // if the transfer property on the Active Effect is true.
   CONFIG.ActiveEffect.legacyTransferral = false;
 
   // Register sheet application classes
-  crusaders.unregisterSheet('core', TrenchCrusadeCrusaderSheet);
-  crusaders.registerSheet('trench-crusade', TrenchCrusadeCrusaderSheet, {
+  actors.unregisterSheet('core', TrenchCrusadeCrusaderSheet);
+  actors.registerSheet('trench-crusade', TrenchCrusadeCrusaderSheet, {
     makeDefault: true,
-    label: 'BOILERPLATE.SheetLabels.crusader',
+    label: 'BOILERPLATE.SheetLabels.actor',
   });
   Items.unregisterSheet('core', ItemSheet);
   Items.registerSheet('trench-crusade', TrenchCrusadeItemSheet, {
@@ -105,7 +105,7 @@ Hooks.once('ready', function () {
 async function createItemMacro(data, slot) {
   // First, determine if this is a valid owned item.
   if (data.type !== 'Item') return;
-  if (!data.uuid.includes('crusader.') && !data.uuid.includes('Token.')) {
+  if (!data.uuid.includes('actor.') && !data.uuid.includes('Token.')) {
     return ui.notifications.warn(
       'You can only create macro buttons for owned Items'
     );

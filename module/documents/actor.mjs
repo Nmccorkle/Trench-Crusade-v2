@@ -1,11 +1,11 @@
 /**
- * Extend the base crusader document by defining a custom roll data structure which is ideal for the Simple system.
- * @extends {crusader}
+ * Extend the base actor document by defining a custom roll data structure which is ideal for the Simple system.
+ * @extends {actor}
  */
-export class Boilerplatecrusader extends crusader {
+export class Boilerplateactor extends actor {
   /** @override */
   prepareData() {
-    // Prepare data for the crusader. Calling the super version of this executes
+    // Prepare data for the actor. Calling the super version of this executes
     // the following, in order: data reset (to clear active effects),
     // prepareBaseData(), prepareEmbeddedDocuments() (including active effects),
     // prepareDerivedData().
@@ -20,36 +20,36 @@ export class Boilerplatecrusader extends crusader {
 
   /**
    * @override
-   * Augment the crusader source data with additional dynamic data. Typically,
+   * Augment the actor source data with additional dynamic data. Typically,
    * you'll want to handle most of your calculated/derived data in this step.
    * Data calculated in this step should generally not exist in template.json
    * (such as ability modifiers rather than ability scores) and should be
-   * available both inside and outside of character sheets (such as if an crusader
+   * available both inside and outside of character sheets (such as if an actor
    * is queried and has a roll executed directly from it).
    */
   prepareDerivedData() {
-    const crusaderData = this;
-    const systemData = crusaderData.system;
+    const actorData = this;
+    const systemData = actorData.system;
 
     // Ensure systemData exists before proceeding
     if (!systemData) {
-      console.warn("System data is undefined for crusader:", crusaderData);
+      console.warn("System data is undefined for actor:", actorData);
       return;
     }
 
-    this._prepareCharacterData(crusaderData);
-    this._prepareNpcData(crusaderData);
+    this._prepareCharacterData(actorData);
+    this._prepareNpcData(actorData);
   }
 
   /**
    * Prepare Character type specific data
    */
-  _prepareCharacterData(crusaderData) {
-    if (crusaderData.type !== 'character') return;
+  _prepareCharacterData(actorData) {
+    if (actorData.type !== 'character') return;
 
-    const systemData = crusaderData.system;
+    const systemData = actorData.system;
     if (!systemData || !systemData.abilities) {
-      console.warn("Abilities data is missing for character:", crusaderData);
+      console.warn("Abilities data is missing for character:", actorData);
       return;
     }
 
@@ -63,13 +63,13 @@ export class Boilerplatecrusader extends crusader {
   /**
    * Prepare NPC type specific data.
    */
-  _prepareNpcData(crusaderData) {
-    if (crusaderData.type !== 'npc') return;
+  _prepareNpcData(actorData) {
+    if (actorData.type !== 'npc') return;
 
     // Make modifications to data here. For example:
-    const systemData = crusaderData.system;
+    const systemData = actorData.system;
     if (!systemData || typeof systemData.cr !== 'number') {
-      console.warn("CR data is missing or invalid for NPC:", crusaderData);
+      console.warn("CR data is missing or invalid for NPC:", actorData);
       return;
     }
 

@@ -4,14 +4,14 @@ import {
 } from '../helpers/effects.mjs';
 
 /**
- * Extend the basic crusaderSheet with some very simple modifications
- * @extends {crusaderSheet}
+ * Extend the basic actorSheet with some very simple modifications
+ * @extends {actorSheet}
  */
-export class TrenchCrusadecrusaderSheet extends crusaderSheet {
+export class TrenchCrusadeactorSheet extends actorSheet {
   /** @override */
   static get defaultOptions() {
     return foundry.utils.mergeObject(super.defaultOptions, {
-      classes: ['trench-crusade', 'sheet', 'crusader'],
+      classes: ['trench-crusade', 'sheet', 'actor'],
       width: 600,
       height: 600,
       tabs: [
@@ -26,7 +26,7 @@ export class TrenchCrusadecrusaderSheet extends crusaderSheet {
 
   /** @override */
   get template() {
-    return `systems/trench-crusade/templates/crusader/crusader-${this.crusader.type}-sheet.hbs`;
+    return `systems/trench-crusade/templates/actor/actor-${this.actor.type}-sheet.hbs`;
   }
 
   /* -------------------------------------------- */
@@ -35,52 +35,52 @@ export class TrenchCrusadecrusaderSheet extends crusaderSheet {
   async getData() {
     // Retrieve the data structure from the base sheet. You can inspect or log
     // the context variable to see the structure, but some key properties for
-    // sheets are the crusader object, the data object, whether or not it's
+    // sheets are the actor object, the data object, whether or not it's
     // editable, the items array, and the effects array.
     const context = super.getData();
 
-    // Use a safe clone of the crusader data for further operations.
-    const crusaderData = this.document.toPlainObject();
+    // Use a safe clone of the actor data for further operations.
+    const actorData = this.document.toPlainObject();
 
-    // Add the crusader's data to context.data for easier access, as well as flags.
-    context.system = crusaderData.system;
-    context.flags = crusaderData.flags;
+    // Add the actor's data to context.data for easier access, as well as flags.
+    context.system = actorData.system;
+    context.flags = actorData.flags;
 
     // Adding a pointer to CONFIG.BOILERPLATE
     context.config = CONFIG.BOILERPLATE;
 
     // Prepare character data and items.
-    if (crusaderData.type == 'character') {
+    if (actorData.type == 'character') {
       this._prepareItems(context);
       this._prepareCharacterData(context);
     }
 
     // Prepare NPC data and items.
-    if (crusaderData.type == 'npc') {
+    if (actorData.type == 'npc') {
       this._prepareItems(context);
     }
 
     // Enrich biography info for display
     // Enrichment turns text like `[[/r 1d20]]` into buttons
     context.enrichedBiography = await TextEditor.enrichHTML(
-      this.crusader.system.biography,
+      this.actor.system.biography,
       {
         // Whether to show secret blocks in the finished html
         secrets: this.document.isOwner,
         // Necessary in v11, can be removed in v12
         async: true,
         // Data to fill in for inline rolls
-        rollData: this.crusader.getRollData(),
+        rollData: this.actor.getRollData(),
         // Relative UUID resolution
-        relativeTo: this.crusader,
+        relativeTo: this.actor,
       }
     );
 
     // Prepare active effects
     context.effects = prepareActiveEffectCategories(
-      // A generator that returns all effects stored on the crusader
+      // A generator that returns all effects stored on the actor
       // as well as any items
-      this.crusader.allApplicableEffects()
+      this.actor.allApplicableEffects()
     );
 
     return context;
@@ -97,7 +97,7 @@ export class TrenchCrusadecrusaderSheet extends crusaderSheet {
   }
 
   /**
-   * Organize and classify Items for crusader sheets.
+   * Organize and classify Items for actor sheets.
    *
    * @param {object} context The context object to mutate
    */
@@ -152,7 +152,7 @@ export class TrenchCrusadecrusaderSheet extends crusaderSheet {
     // Render the item sheet for viewing/editing prior to the editable check.
     html.on('click', '.item-edit', (ev) => {
       const li = $(ev.currentTarget).parents('.item');
-      const item = this.crusader.items.get(li.data('itemId'));
+      const item = this.actor.items.get(li.data('itemId'));
       item.sheet.render(true);
     });
 
@@ -166,7 +166,7 @@ export class TrenchCrusadecrusaderSheet extends crusaderSheet {
     // Delete Inventory Item
     html.on('click', '.item-delete', (ev) => {
       const li = $(ev.currentTarget).parents('.item');
-      const item = this.crusader.items.get(li.data('itemId'));
+      const item = this.actor.items.get(li.data('itemId'));
       item.delete();
       li.slideUp(200, () => this.render(false));
     });
@@ -175,9 +175,9 @@ export class TrenchCrusadecrusaderSheet extends crusaderSheet {
     html.on('click', '.effect-control', (ev) => {
       const row = ev.currentTarget.closest('li');
       const document =
-        row.dataset.parentId === this.crusader.id
-          ? this.crusader
-          : this.crusader.items.get(row.dataset.parentId);
+        row.dataset.parentId === this.actor.id
+          ? this.actor
+          : this.actor.items.get(row.dataset.parentId);
       onManageActiveEffect(ev, document);
     });
 
@@ -185,7 +185,7 @@ export class TrenchCrusadecrusaderSheet extends crusaderSheet {
     html.on('click', '.rollable', this._onRoll.bind(this));
 
     // Drag events for macros.
-    if (this.crusader.isOwner) {
+    if (this.actor.isOwner) {
       let handler = (ev) => this._onDragStart(ev);
       html.find('li.item').each((i, li) => {
         if (li.classList.contains('inventory-header')) return;
@@ -196,7 +196,7 @@ export class TrenchCrusadecrusaderSheet extends crusaderSheet {
   }
 
   /**
-   * Handle creating a new Owned Item for the crusader using initial data defined in the HTML dataset
+   * Handle creating a new Owned Item for the actor using initial data defined in the HTML dataset
    * @param {Event} event   The originating click event
    * @private
    */
@@ -219,7 +219,7 @@ export class TrenchCrusadecrusaderSheet extends crusaderSheet {
     delete itemData.system['type'];
 
     // Finally, create the item!
-    return await Item.create(itemData, { parent: this.crusader });
+    return await Item.create(itemData, { parent: this.actor });
   }
 
   /**
@@ -236,7 +236,7 @@ export class TrenchCrusadecrusaderSheet extends crusaderSheet {
     if (dataset.rollType) {
       if (dataset.rollType == 'item') {
         const itemId = element.closest('.item').dataset.itemId;
-        const item = this.crusader.items.get(itemId);
+        const item = this.actor.items.get(itemId);
         if (item) return item.roll();
       }
     }
@@ -244,9 +244,9 @@ export class TrenchCrusadecrusaderSheet extends crusaderSheet {
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
       let label = dataset.label ? `[ability] ${dataset.label}` : '';
-      let roll = new Roll(dataset.roll, this.crusader.getRollData());
+      let roll = new Roll(dataset.roll, this.actor.getRollData());
       roll.toMessage({
-        speaker: ChatMessage.getSpeaker({ crusader: this.crusader }),
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
         flavor: label,
         rollMode: game.settings.get('core', 'rollMode'),
       });

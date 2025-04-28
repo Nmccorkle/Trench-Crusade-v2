@@ -1,6 +1,6 @@
-import TrenchCrusadecrusaderBase from "./base-crusader.mjs";
+import TrenchCrusadeactorBase from "./base-actor.mjs";
 
-export default class TrenchCrusadeNPC extends TrenchCrusadecrusaderBase {
+export default class TrenchCrusadeNPC extends TrenchCrusadeactorBase {
 
   static defineSchema() {
     const fields = foundry.data.fields;

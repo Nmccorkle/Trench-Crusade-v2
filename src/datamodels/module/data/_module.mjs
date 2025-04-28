@@ -1,7 +1,7 @@
-// Export crusaders
-export {default as TrenchCrusadecrusaderBase} from "./base-crusader.mjs";
-export {default as TrenchCrusadeCharacter} from "./crusader-character.mjs";
-export {default as TrenchCrusadeNPC} from "./crusader-npc.mjs";
+// Export actors
+export {default as TrenchCrusadeactorBase} from "./base-actor.mjs";
+export {default as TrenchCrusadeCharacter} from "./actor-character.mjs";
+export {default as TrenchCrusadeNPC} from "./actor-npc.mjs";
 
 // Export Items
 export {default as TrenchCrusadeItemBase} from "./base-item.mjs";

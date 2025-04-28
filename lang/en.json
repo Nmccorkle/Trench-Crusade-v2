@@ -44,7 +44,7 @@
       "Ws": { "long": "Weapon Skill", "abbr": "ws" }
     },
     "SheetLabels": {
-      "crusader": "TrenchCrusade Crusader Sheet",
+      "actor": "TrenchCrusade Crusader Sheet",
       "Item": "TrenchCrusade Item Sheet"
     },
     "Item": {
@@ -63,7 +63,7 @@
   },
 
   "TYPES": {
-    "crusader": {
+    "actor": {
       "character": "Character",
       "npc": "NPC"
     },

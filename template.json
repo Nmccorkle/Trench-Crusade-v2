@@ -1,6 +1,6 @@
 {
-  "crusader": {
-    "types": ["crusader", "npc"],
+  "actor": {
+    "types": ["actor", "npc"],
     "templates": {
       "base": {
         "wounds": {
@@ -16,7 +16,7 @@
         "biography": ""
       }
     },
-    "crusader": {
+    "actor": {
       "templates": ["base"],
       "attributes": {
         "tier": {

@@ -5,11 +5,11 @@
  */
 export const preloadHandlebarsTemplates = async function () {
   return loadTemplates([
-    // crusader partials.
-    'systems/trench-crusade/templates/crusader/parts/crusader-features.hbs',
-    'systems/trench-crusade/templates/crusader/parts/crusader-items.hbs',
-    'systems/trench-crusade/templates/crusader/parts/crusader-spells.hbs',
-    'systems/trench-crusade/templates/crusader/parts/crusader-effects.hbs',
+    // actor partials.
+    'systems/trench-crusade/templates/actor/parts/actor-features.hbs',
+    'systems/trench-crusade/templates/actor/parts/actor-items.hbs',
+    'systems/trench-crusade/templates/actor/parts/actor-spells.hbs',
+    'systems/trench-crusade/templates/actor/parts/actor-effects.hbs',
     // Item partials
     'systems/trench-crusade/templates/item/parts/item-effects.hbs',
   ]);
