@@ -41,7 +41,7 @@
   "packs": [],
   "packFolders": [],
   "socket": false,
-  "manifest": "Replace this with a link to the /latest release system.json so people can receive updates after they've installed the system",
+  "manifest": "https://github.com/Nmccorkle/Trench-Crusade-v2/releases/download/v2.0.0/system.json",
   "download": "https://github.com/Nmccorkle/Trench-Crusade-v2/releases/download/v2.0.0/Trench-Crusade-v2.zip",
   "background": "trench-crusade/assets/anvil-impact.png",
   "gridDistance": 5,
