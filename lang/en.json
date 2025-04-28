@@ -1,16 +1,51 @@
 {
+  "EFFECT": {
+    "TabDuration": "Duration"
+  },
   "BOILERPLATE": {
+    "Skills": {
+      "Alchemy": { "long": "Alchemy" },
+      "Athletics": { "long": "Athletics" },
+      "Awareness": { "long": "Awareness" },
+      "Brawling": { "long": "Brawling" },
+      "Command": { "long": "Command" },
+      "Discipline": { "long": "Discipline" },
+      "Drive": { "long": "Drive" },
+      "Esoterica": { "long": "Esoterica" },
+      "Faith": { "long": "Faith" },
+      "Forgecraft": { "long": "Forgecraft" },
+      "Gambling": { "long": "Gambling" },
+      "Heresy": { "long": "Heresy" },
+      "Intimidation": { "long": "Intimidation" },
+      "Investigation": { "long": "Investigation" },
+      "Language": { "long": "Language" },
+      "Lore": { "long": "Lore" },
+      "Medicine": { "long": "Medicine" },
+      "Navigation": { "long": "Navigation" },
+      "Riding": { "long": "Riding" },
+      "Sabotage": { "long": "Sabotage" },
+      "Stealth": { "long": "Stealth" },
+      "Subterfuge": { "long": "Subterfuge" },
+      "Survival": { "long": "Survival" },
+      "Tactics": { "long": "Tactics" },
+      "Torture": { "long": "Torture" },
+      "Tradecraft": { "long": "Tradecraft" },
+      "Zealotry": { "long": "Zealotry" }
+    },
     "Ability": {
       "Str": { "long": "Strength", "abbr": "str" },
-      "Con": { "long": "Constitution", "abbr": "con" },
-      "Dex": { "long": "Dexterity", "abbr": "dex" },
+      "Agi": { "long": "Agility", "abbr": "agi" },
+      "End": { "long": "Endurance", "abbr": "end" },
+      "Wil": { "long": "Willpower", "abbr": "wil" },
       "Int": { "long": "Intelligence", "abbr": "int" },
-      "Wis": { "long": "Wisdom", "abbr": "wis" },
-      "Cha": { "long": "Charisma", "abbr": "cha" }
+      "Dev": { "long": "Devotion", "abbr": "dev" },
+      "Cor": { "long": "Corruption", "abbr": "cor" },
+      "Bs": { "long": "Ballistic Skill", "abbr": "bs" },
+      "Ws": { "long": "Weapon Skill", "abbr": "ws" }
     },
     "SheetLabels": {
-      "Actor": "Boilerplate Actor Sheet",
-      "Item": "Boilerplate Item Sheet"
+      "crusader": "TrenchCrusade Crusader Sheet",
+      "Item": "TrenchCrusade Item Sheet"
     },
     "Item": {
       "Spell": {
@@ -28,7 +63,7 @@
   },
 
   "TYPES": {
-    "Actor": {
+    "crusader": {
       "character": "Character",
       "npc": "NPC"
     },

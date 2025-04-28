@@ -1,6 +1,6 @@
-import BoilerplateActorBase from "./base-actor.mjs";
+import TrenchCrusadecrusaderBase from "./base-crusader.mjs";
 
-export default class BoilerplateCharacter extends BoilerplateActorBase {
+export default class TrenchCrusadeCharacter extends TrenchCrusadecrusaderBase {
 
   static defineSchema() {
     const fields = foundry.data.fields;
@@ -8,7 +8,7 @@ export default class BoilerplateCharacter extends BoilerplateActorBase {
     const schema = super.defineSchema();
 
     schema.attributes = new fields.SchemaField({
-      level: new fields.SchemaField({
+      tier: new fields.SchemaField({
         value: new fields.NumberField({ ...requiredInteger, initial: 1 })
       }),
     });
@@ -37,7 +37,7 @@ export default class BoilerplateCharacter extends BoilerplateActorBase {
   getRollData() {
     const data = {};
 
-    // Copy the ability scores to the top level, so that rolls can use
+    // Copy the ability scores to the top tier, so that rolls can use
     // formulas like `@str.mod + 4`.
     if (this.abilities) {
       for (let [k,v] of Object.entries(this.abilities)) {
@@ -45,7 +45,7 @@ export default class BoilerplateCharacter extends BoilerplateActorBase {
       }
     }
 
-    data.lvl = this.attributes.level.value;
+    data.lvl = this.attributes.tier.value;
 
     return data
   }

@@ -1,11 +1,11 @@
 {
-  "name": "boilerplate",
+  "name": "trench-crusade",
   "version": "2.0.0",
-  "description": "CSS compiler for the Boilerplate system",
+  "description": "CSS compiler for the TrenchCrusade system",
   "scripts": {
-    "build": "sass src/scss/boilerplate.scss css/boilerplate.css --style=expanded --no-source-map",
-    "watch": "sass src/scss/boilerplate.scss css/boilerplate.css --style=expanded --source-map --watch",
-    "generate": "node src/generate-boilerplate-system.mjs"
+    "build": "sass src/scss/trench-crusade.scss css/trench-crusade.css --style=expanded --no-source-map",
+    "watch": "sass src/scss/trench-crusade.scss css/trench-crusade.css --style=expanded --source-map --watch",
+    "generate": "node src/generate-trench-crusade-system.mjs"
   },
   "browserslist": [
     "last 3 versions"

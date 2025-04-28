@@ -1,6 +1,6 @@
-import BoilerplateActorBase from "./base-actor.mjs";
+import TrenchCrusadecrusaderBase from "./base-crusader.mjs";
 
-export default class BoilerplateNPC extends BoilerplateActorBase {
+export default class TrenchCrusadeNPC extends TrenchCrusadecrusaderBase {
 
   static defineSchema() {
     const fields = foundry.data.fields;

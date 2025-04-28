@@ -1,6 +1,6 @@
-import BoilerplateItemBase from "./base-item.mjs";
+import TrenchCrusadeItemBase from "./base-item.mjs";
 
-export default class BoilerplateSpell extends BoilerplateItemBase {
+export default class TrenchCrusadeSpell extends TrenchCrusadeItemBase {
 
   static defineSchema() {
     const fields = foundry.data.fields;

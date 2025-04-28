@@ -69,7 +69,11 @@ class SystemGenerator {
    * Delete the build directory so that we have a fresh start.
    */
   cleanBuildDir() {
-    fs.rmSync(`build`, {recursive: true, force: true});
+    try {
+      fs.rmSync(`build`, { recursive: true, force: true });
+    } catch (err) {
+      console.error("Error cleaning build directory", err);
+    }
   }
 
   /**
@@ -79,9 +83,11 @@ class SystemGenerator {
    */
   copyFiles(files) {
     files.forEach(source => {
-      fs.cpSync(source, `build/${this.packageName}/${source}`, {recursive: true}, (err) => {
-        if (err) throw err;
-      });
+      try {
+        fs.cpSync(source, `build/${this.packageName}/${source}`, { recursive: true });
+      } catch (err) {
+        console.error(`Error copying file: ${source}`, err);
+      }
     });
 
     // Handle data model conversion.
@@ -89,39 +95,39 @@ class SystemGenerator {
       const dataModelFiles = globSync('src/datamodels/*');
       dataModelFiles.forEach(source => {
         const dest = source.replaceAll('\\', '/').replace('src/datamodels/', '');
-        fs.cpSync(source, `build/${this.packageName}/${dest}`, {recursive: true, force: true}, (err) => {
+        fs.cpSync(source, `build/${this.packageName}/${dest}`, { recursive: true, force: true }, (err) => {
           if (err) throw err;
         });
       });
     }
 
     // Remove data model source.
-    fs.rmSync(`build/${this.packageName}/src/datamodels`, {recursive: true, force: true});
+    fs.rmSync(`build/${this.packageName}/src/datamodels`, { recursive: true, force: true });
   }
 
   /**
    * Replace file contents.
    *
-   * Replace refercnes to 'boilerplate', 'Boilerplate', and 'BOILERPLATE'
+   * Replace refercnes to 'trench-crusade', 'TrenchCrusade', and 'BOILERPLATE'
    * in files copied over to the build directory.
    */
   replaceFileContents() {
     // Set patterns to iterate over later.
     const replacements = [
       {
-        pattern: new RegExp(/game\.boilerplate/g),
+        pattern: new RegExp(/game\.trench-crusade/g),
         replacement: `game.${this.propName}`
       },
       {
-        pattern: new RegExp(/flags\.boilerplate/g),
+        pattern: new RegExp(/flags\.trench-crusade/g),
         replacement: `flags.${this.propName}`
       },
       {
-        pattern: 'boilerplate',
+        pattern: 'trench-crusade',
         replacement: this.packageName
       },
       {
-        pattern: 'Boilerplate',
+        pattern: 'TrenchCrusade',
         replacement: this.className
       },
       {
@@ -132,7 +138,7 @@ class SystemGenerator {
 
     // Update title in system.json.
     replace({
-      regex: 'Boilerplate',
+      regex: 'TrenchCrusade',
       replacement: this.titleName,
       paths: [`./build/${this.packageName}/system.json`],
       silent: true
@@ -158,15 +164,15 @@ class SystemGenerator {
   /**
    * Rename files.
    *
-   * Rename files that had boilerplate in their name, such as
-   * css/boilerplate.css.
+   * Rename files that had trench-crusade in their name, such as
+   * css/trench-crusade.css.
    */
   renameFiles() {
-    glob(`build/${this.packageName}/**/*boilerplate*.*`).then(files => {
+    glob(`build/${this.packageName}/**/*trench-crusade*.*`).then(files => {
       files.forEach(oldPath => {
         const file = path.basename(oldPath);
         const directory = path.dirname(oldPath);
-        fs.rename(oldPath, `${directory}/${file.replaceAll('boilerplate', this.packageName)}`, (err) => {
+        fs.rename(oldPath, `${directory}/${file.replaceAll('trench-crusade', this.packageName)}`, (err) => {
           if (err) throw err;
         });
       })
@@ -183,7 +189,7 @@ class SystemGenerator {
    */
   cleanPackageJson() {
     // Remove unneeded files.
-    fs.rmSync(`build/${this.packageName}/src/generate-boilerplate-system.mjs`);
+    fs.rmSync(`build/${this.packageName}/src/generate-trench-crusade-system.mjs`);
     fs.rmSync(`build/${this.packageName}/package-lock.json`);
 
     // Load package.json so that we can remove dev dependencies.
@@ -254,13 +260,13 @@ inquirer
     // Clean out our build directory.
     generator.cleanBuildDir();
 
-    // Glob Boilerplate's files so that we can process them.
+    // Glob TrenchCrusade's files so that we can process them.
     glob('*', {ignore: ['node_modules/**'] }).then(files => {
       // Copy all files into the build dir.
       generator.copyFiles(files);
-      // Replace boilerplate name mentions in files.
+      // Replace trench-crusade name mentions in files.
       generator.replaceFileContents();
-      // Rename files that had boilerplate in their name.
+      // Rename files that had trench-crusade in their name.
       generator.renameFiles();
       // Remove generator files and update package.json.
       generator.cleanPackageJson();

@@ -1,7 +1,7 @@
 /**
- * Manage Active Effect instances through an Actor or Item Sheet via effect control buttons.
+ * Manage Active Effect instances through an crusader or Item Sheet via effect control buttons.
  * @param {MouseEvent} event      The left-click event on the effect control
- * @param {Actor|Item} owner      The owning document which manages this effect
+ * @param {crusader|Item} owner      The owning document which manages this effect
  */
 export function onManageActiveEffect(event, owner) {
   event.preventDefault();
@@ -19,8 +19,7 @@ export function onManageActiveEffect(event, owner) {
           }),
           icon: 'icons/svg/aura.svg',
           origin: owner.uuid,
-          'duration.rounds':
-            li.dataset.effectType === 'temporary' ? 1 : undefined,
+          duration: { rounds: li.dataset.effectType === 'temporary' ? 1 : undefined },
           disabled: li.dataset.effectType === 'inactive',
         },
       ]);
@@ -34,7 +33,7 @@ export function onManageActiveEffect(event, owner) {
 }
 
 /**
- * Prepare the data structure for Active Effects which are currently embedded in an Actor or Item.
+ * Prepare the data structure for Active Effects which are currently embedded in an crusader or Item.
  * @param {ActiveEffect[]} effects    A collection or generator of Active Effect documents to prepare sheet data for
  * @return {object}                   Data for rendering
  */

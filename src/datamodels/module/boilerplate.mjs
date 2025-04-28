@@ -1,9 +1,9 @@
 // Import document classes.
-import { BoilerplateActor } from './documents/actor.mjs';
-import { BoilerplateItem } from './documents/item.mjs';
+import { TrenchCrusadeCrusader } from './documents/crusader.mjs';
+import { TrenchCrusadeItem } from './documents/item.mjs';
 // Import sheet classes.
-import { BoilerplateActorSheet } from './sheets/actor-sheet.mjs';
-import { BoilerplateItemSheet } from './sheets/item-sheet.mjs';
+import { TrenchCrusadeCrusaderSheet } from './sheets/crusader-sheet.mjs';
+import { TrenchCrusadeItemSheet } from './sheets/item-sheet.mjs';
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { BOILERPLATE } from './helpers/config.mjs';
@@ -17,9 +17,9 @@ import * as models from './data/_module.mjs';
 Hooks.once('init', function () {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
-  game.boilerplate = {
-    BoilerplateActor,
-    BoilerplateItem,
+  game.trench_crusade = {
+    TrenchCrusadeCrusader,
+    TrenchCrusadeItem,
     rollItemMacro,
   };
 
@@ -36,35 +36,35 @@ Hooks.once('init', function () {
   };
 
   // Define custom Document and DataModel classes
-  CONFIG.Actor.documentClass = BoilerplateActor;
+  CONFIG.crusader.documentClass = TrenchCrusadeCrusader;
 
   // Note that you don't need to declare a DataModel
-  // for the base actor/item classes - they are included
+  // for the base crusader/item classes - they are included
   // with the Character/NPC as part of super.defineSchema()
-  CONFIG.Actor.dataModels = {
-    character: models.BoilerplateCharacter,
-    npc: models.BoilerplateNPC
+  CONFIG.crusader.dataModels = {
+    character: models.TrenchCrusadeCharacter,
+    npc: models.TrenchCrusadeNPC
   }
-  CONFIG.Item.documentClass = BoilerplateItem;
+  CONFIG.Item.documentClass = TrenchCrusadeItem;
   CONFIG.Item.dataModels = {
-    item: models.BoilerplateItem,
-    feature: models.BoilerplateFeature,
-    spell: models.BoilerplateSpell
+    item: models.TrenchCrusadeItem,
+    feature: models.TrenchCrusadeFeature,
+    spell: models.TrenchCrusadeSpell
   }
 
-  // Active Effects are never copied to the Actor,
-  // but will still apply to the Actor from within the Item
+  // Active Effects are never copied to the crusader,
+  // but will still apply to the crusader from within the Item
   // if the transfer property on the Active Effect is true.
   CONFIG.ActiveEffect.legacyTransferral = false;
 
   // Register sheet application classes
-  Actors.unregisterSheet('core', ActorSheet);
-  Actors.registerSheet('boilerplate', BoilerplateActorSheet, {
+  crusaders.unregisterSheet('core', TrenchCrusadeCrusaderSheet);
+  crusaders.registerSheet('trench-crusade', TrenchCrusadeCrusaderSheet, {
     makeDefault: true,
-    label: 'BOILERPLATE.SheetLabels.Actor',
+    label: 'BOILERPLATE.SheetLabels.crusader',
   });
   Items.unregisterSheet('core', ItemSheet);
-  Items.registerSheet('boilerplate', BoilerplateItemSheet, {
+  Items.registerSheet('trench-crusade', TrenchCrusadeItemSheet, {
     makeDefault: true,
     label: 'BOILERPLATE.SheetLabels.Item',
   });
@@ -105,7 +105,7 @@ Hooks.once('ready', function () {
 async function createItemMacro(data, slot) {
   // First, determine if this is a valid owned item.
   if (data.type !== 'Item') return;
-  if (!data.uuid.includes('Actor.') && !data.uuid.includes('Token.')) {
+  if (!data.uuid.includes('crusader.') && !data.uuid.includes('Token.')) {
     return ui.notifications.warn(
       'You can only create macro buttons for owned Items'
     );
@@ -114,7 +114,7 @@ async function createItemMacro(data, slot) {
   const item = await Item.fromDropData(data);
 
   // Create the macro command using the uuid.
-  const command = `game.boilerplate.rollItemMacro("${data.uuid}");`;
+  const command = `game.trench_crusade.rollItemMacro("${data.uuid}");`;
   let macro = game.macros.find(
     (m) => m.name === item.name && m.command === command
   );
@@ -124,7 +124,7 @@ async function createItemMacro(data, slot) {
       type: 'script',
       img: item.img,
       command: command,
-      flags: { 'boilerplate.itemMacro': true },
+      flags: { 'trench-crusade.itemMacro': true },
     });
   }
   game.user.assignHotbarMacro(macro, slot);

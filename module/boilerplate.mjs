@@ -1,9 +1,9 @@
 // Import document classes.
-import { BoilerplateActor } from './documents/actor.mjs';
-import { BoilerplateItem } from './documents/item.mjs';
+import { TrenchCrusadecrusader } from './documents/crusader.mjs';
+import { TrenchCrusadeItem } from './documents/item.mjs';
 // Import sheet classes.
-import { BoilerplateActorSheet } from './sheets/actor-sheet.mjs';
-import { BoilerplateItemSheet } from './sheets/item-sheet.mjs';
+import { TrenchCrusadecrusaderSheet } from './sheets/crusader-sheet.mjs';
+import { TrenchCrusadeItemSheet } from './sheets/item-sheet.mjs';
 // Import helper/utility classes and constants.
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { BOILERPLATE } from './helpers/config.mjs';
@@ -15,16 +15,16 @@ import { BOILERPLATE } from './helpers/config.mjs';
 Hooks.once('init', function () {
   // Add utility classes to the global game object so that they're more easily
   // accessible in global contexts.
-  game.boilerplate = {
-    BoilerplateActor,
-    BoilerplateItem,
+  game.trench_crusade = {
+    TrenchCrusadecrusader,
+    TrenchCrusadeItem,
     rollItemMacro,
   };
 
   // Add custom constants for configuration.
   CONFIG.BOILERPLATE = BOILERPLATE;
 
-  CONFIG.Actor.trackableAttributes = {
+  CONFIG.crusader.trackableAttributes = {
     crusader: {
       bar: ["resources.wounds", "resources.power"]
     },
@@ -35,32 +35,32 @@ Hooks.once('init', function () {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: '@abilities.agi.long',
-    decimals: 0,
+    formula: game.settings.get('trench-crusade', 'initiativeFormula') || '1d20 + @abilities.dex.mod',
+    decimals: 2,
   };
-  CONFIG.Actor.wounds = {
+  CONFIG.crusader.wounds = {
     formula: '@abilities.end.mod + @abilities.str.mod + (2 * tier)',
     decimals: 0,
   };
-  CONFIG.Actor.
+  CONFIG.crusader.
 
   // Define custom Document classes
-  CONFIG.Actor.documentClass = BoilerplateActor;
-  CONFIG.Item.documentClass = BoilerplateItem;
+  CONFIG.crusader.documentClass = TrenchCrusadecrusader;
+  CONFIG.Item.documentClass = TrenchCrusadeItem;
 
-  // Active Effects are never copied to the Actor,
-  // but will still apply to the Actor from within the Item
+  // Active Effects are never copied to the crusader,
+  // but will still apply to the crusader from within the Item
   // if the transfer property on the Active Effect is true.
   CONFIG.ActiveEffect.legacyTransferral = false;
 
   // Register sheet application classes
-  Actors.unregisterSheet('core', ActorSheet);
-  Actors.registerSheet('boilerplate', BoilerplateActorSheet, {
+  crusaders.unregisterSheet('core', crusaderSheet);
+  crusaders.registerSheet('trench-crusade', TrenchCrusadecrusaderSheet, {
     makeDefault: true,
-    label: 'BOILERPLATE.SheetLabels.Actor',
+    label: 'BOILERPLATE.SheetLabels.crusader',
   });
   Items.unregisterSheet('core', ItemSheet);
-  Items.registerSheet('boilerplate', BoilerplateItemSheet, {
+  Items.registerSheet('trench-crusade', TrenchCrusadeItemSheet, {
     makeDefault: true,
     label: 'BOILERPLATE.SheetLabels.Item',
   });
@@ -101,7 +101,7 @@ Hooks.once('ready', function () {
 async function createItemMacro(data, slot) {
   // First, determine if this is a valid owned item.
   if (data.type !== 'Item') return;
-  if (!data.uuid.includes('Actor.') && !data.uuid.includes('Token.')) {
+  if (!data.uuid.includes('crusader.') && !data.uuid.includes('Token.')) {
     return ui.notifications.warn(
       'You can only create macro buttons for owned Items'
     );
@@ -110,7 +110,7 @@ async function createItemMacro(data, slot) {
   const item = await Item.fromDropData(data);
 
   // Create the macro command using the uuid.
-  const command = `game.boilerplate.rollItemMacro("${data.uuid}");`;
+  const command = `game.trench-crusade.rollItemMacro("${data.uuid}");`;
   let macro = game.macros.find(
     (m) => m.name === item.name && m.command === command
   );
@@ -120,7 +120,7 @@ async function createItemMacro(data, slot) {
       type: 'script',
       img: item.img,
       command: command,
-      flags: { 'boilerplate.itemMacro': true },
+      flags: { 'trench-crusade.itemMacro': true },
     });
   }
   game.user.assignHotbarMacro(macro, slot);

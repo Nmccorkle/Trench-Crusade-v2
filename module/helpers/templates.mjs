@@ -5,12 +5,12 @@
  */
 export const preloadHandlebarsTemplates = async function () {
   return loadTemplates([
-    // Actor partials.
-    'systems/boilerplate/templates/actor/parts/actor-features.hbs',
-    'systems/boilerplate/templates/actor/parts/actor-items.hbs',
-    'systems/boilerplate/templates/actor/parts/actor-spells.hbs',
-    'systems/boilerplate/templates/actor/parts/actor-effects.hbs',
+    // crusader partials.
+    'systems/trench-crusade/templates/crusader/parts/crusader-features.hbs',
+    'systems/trench-crusade/templates/crusader/parts/crusader-items.hbs',
+    'systems/trench-crusade/templates/crusader/parts/crusader-spells.hbs',
+    'systems/trench-crusade/templates/crusader/parts/crusader-effects.hbs',
     // Item partials
-    'systems/boilerplate/templates/item/parts/item-effects.hbs',
+    'systems/trench-crusade/templates/item/parts/item-effects.hbs',
   ]);
 };

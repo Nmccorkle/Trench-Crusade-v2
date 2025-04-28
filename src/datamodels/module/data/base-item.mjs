@@ -1,6 +1,6 @@
-import BoilerplateDataModel from "./base-model.mjs";
+import TrenchCrusadeDataModel from "./base-model.mjs";
 
-export default class BoilerplateItemBase extends BoilerplateDataModel {
+export default class TrenchCrusadeItemBase extends TrenchCrusadeDataModel {
 
   static defineSchema() {
     const fields = foundry.data.fields;

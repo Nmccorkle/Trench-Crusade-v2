@@ -1,10 +1,10 @@
-// Export Actors
-export {default as BoilerplateActorBase} from "./base-actor.mjs";
-export {default as BoilerplateCharacter} from "./actor-character.mjs";
-export {default as BoilerplateNPC} from "./actor-npc.mjs";
+// Export crusaders
+export {default as TrenchCrusadecrusaderBase} from "./base-crusader.mjs";
+export {default as TrenchCrusadeCharacter} from "./crusader-character.mjs";
+export {default as TrenchCrusadeNPC} from "./crusader-npc.mjs";
 
 // Export Items
-export {default as BoilerplateItemBase} from "./base-item.mjs";
-export {default as BoilerplateItem} from "./item-item.mjs";
-export {default as BoilerplateFeature} from "./item-feature.mjs";
-export {default as BoilerplateSpell} from "./item-spell.mjs";
+export {default as TrenchCrusadeItemBase} from "./base-item.mjs";
+export {default as TrenchCrusadeItem} from "./item-item.mjs";
+export {default as TrenchCrusadeFeature} from "./item-feature.mjs";
+export {default as TrenchCrusadeSpell} from "./item-spell.mjs";

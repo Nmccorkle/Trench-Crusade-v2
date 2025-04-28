@@ -1,5 +1,5 @@
 {
-  "Actor": {
+  "crusader": {
     "types": ["crusader", "npc"],
     "templates": {
       "base": {

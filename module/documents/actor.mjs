@@ -1,11 +1,11 @@
 /**
- * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
- * @extends {Actor}
+ * Extend the base crusader document by defining a custom roll data structure which is ideal for the Simple system.
+ * @extends {crusader}
  */
-export class BoilerplateActor extends Actor {
+export class Boilerplatecrusader extends crusader {
   /** @override */
   prepareData() {
-    // Prepare data for the actor. Calling the super version of this executes
+    // Prepare data for the crusader. Calling the super version of this executes
     // the following, in order: data reset (to clear active effects),
     // prepareBaseData(), prepareEmbeddedDocuments() (including active effects),
     // prepareDerivedData().
@@ -20,32 +20,38 @@ export class BoilerplateActor extends Actor {
 
   /**
    * @override
-   * Augment the actor source data with additional dynamic data. Typically,
+   * Augment the crusader source data with additional dynamic data. Typically,
    * you'll want to handle most of your calculated/derived data in this step.
    * Data calculated in this step should generally not exist in template.json
    * (such as ability modifiers rather than ability scores) and should be
-   * available both inside and outside of character sheets (such as if an actor
+   * available both inside and outside of character sheets (such as if an crusader
    * is queried and has a roll executed directly from it).
    */
   prepareDerivedData() {
-    const actorData = this;
-    const systemData = actorData.system;
-    const flags = actorData.flags.boilerplate || {};
+    const crusaderData = this;
+    const systemData = crusaderData.system;
 
-    // Make separate methods for each Actor type (character, npc, etc.) to keep
-    // things organized.
-    this._prepareCharacterData(actorData);
-    this._prepareNpcData(actorData);
+    // Ensure systemData exists before proceeding
+    if (!systemData) {
+      console.warn("System data is undefined for crusader:", crusaderData);
+      return;
+    }
+
+    this._prepareCharacterData(crusaderData);
+    this._prepareNpcData(crusaderData);
   }
 
   /**
    * Prepare Character type specific data
    */
-  _prepareCharacterData(actorData) {
-    if (actorData.type !== 'character') return;
+  _prepareCharacterData(crusaderData) {
+    if (crusaderData.type !== 'character') return;
 
-    // Make modifications to data here. For example:
-    const systemData = actorData.system;
+    const systemData = crusaderData.system;
+    if (!systemData || !systemData.abilities) {
+      console.warn("Abilities data is missing for character:", crusaderData);
+      return;
+    }
 
     // Loop through ability scores, and add their modifiers to our sheet output.
     for (let [key, ability] of Object.entries(systemData.abilities)) {
@@ -57,11 +63,16 @@ export class BoilerplateActor extends Actor {
   /**
    * Prepare NPC type specific data.
    */
-  _prepareNpcData(actorData) {
-    if (actorData.type !== 'npc') return;
+  _prepareNpcData(crusaderData) {
+    if (crusaderData.type !== 'npc') return;
 
     // Make modifications to data here. For example:
-    const systemData = actorData.system;
+    const systemData = crusaderData.system;
+    if (!systemData || typeof systemData.cr !== 'number') {
+      console.warn("CR data is missing or invalid for NPC:", crusaderData);
+      return;
+    }
+
     systemData.xp = systemData.cr * systemData.cr * 100;
   }
 
@@ -85,7 +96,7 @@ export class BoilerplateActor extends Actor {
   _getCharacterRollData(data) {
     if (this.type !== 'character') return;
 
-    // Copy the ability scores to the top level, so that rolls can use
+    // Copy the ability scores to the top tier, so that rolls can use
     // formulas like `@str.mod + 4`.
     if (data.abilities) {
       for (let [k, v] of Object.entries(data.abilities)) {
@@ -93,9 +104,9 @@ export class BoilerplateActor extends Actor {
       }
     }
 
-    // Add level for easier access, or fall back to 0.
-    if (data.attributes.level) {
-      data.lvl = data.attributes.level.value ?? 0;
+    // Ensure attributes exist before accessing tier
+    if (data.attributes?.tier) {
+      data.lvl = data.attributes.tier.value ?? 0;
     }
   }
 
